@@ -3,14 +3,13 @@
   "version": "5.1.1",
   "description": "A React binding of mapbox-gl-js",
   "main": "lib/index.js",
-  "module": "lib-esm/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tslint --project tsconfig.json",
-    "build": "npm run lint && npm run test && npm run build:commonjs && npm run build:esm",
+    "build": "npm run lint && npm run test && npm run build:commonjs",
     "build:commonjs": "tsc -p tsconfig.json",
     "build:esm": "tsc -p tsconfig-esm.json",
     "build:watch": "tsc --watch",
@@ -18,9 +17,6 @@
     "version": "npm run build",
     "postversion": "git push && git push --tags",
     "prettify": "prettier --write src/*.ts src/*.tsx src/**/*.ts src/**/*.tsx example/src/**/*.ts example/src/**/*.tsx",
-    "precommit": "npm run prettify && cd example && node generateRaws.js",
-    "prepush": "npm run build",
-    "prepare": "echo \"preparing\" && npm run build"
   },
   "jest": {
     "transform": {
