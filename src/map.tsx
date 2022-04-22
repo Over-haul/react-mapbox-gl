@@ -189,8 +189,6 @@ const ReactMapboxFactory = ({
         maxBounds
       } = this.props;
 
-      // tslint:disable-next-line:no-any
-      (MapboxGl as any).accessToken = accessToken;
       if (apiUrl) {
         // tslint:disable-next-line:no-any
         (MapboxGl as any).config.API_URL = apiUrl;
@@ -203,6 +201,7 @@ const ReactMapboxFactory = ({
       }
 
       const opts: MapboxGl.MapboxOptions = {
+        accessToken,
         preserveDrawingBuffer,
         hash,
         zoom: zoom[0],

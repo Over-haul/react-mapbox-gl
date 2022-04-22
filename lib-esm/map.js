@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -23,19 +22,11 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var MapboxGl = __importStar(require("mapbox-gl"));
-var React = __importStar(require("react"));
-var map_events_1 = require("./map-events");
-var context_1 = require("./context");
-var react_dom_1 = require("react-dom");
+import * as MapboxGl from 'mapbox-gl';
+import * as React from 'react';
+import { listenEvents, events, updateEvents } from './map-events';
+import { MapContext } from './context';
+import { createPortal } from 'react-dom';
 var isEqual = require('deep-equal');
 var defaultZoom = [11];
 var defaultMovingMethod = 'flyTo';
@@ -132,7 +123,7 @@ var ReactMapboxFactory = function (_a) {
                         onStyleLoad(map, evt);
                     }
                 });
-                this.listeners = map_events_1.listenEvents(map_events_1.events, this.props, map);
+                this.listeners = listenEvents(events, this.props, map);
             };
             ReactMapboxGl.prototype.componentWillUnmount = function () {
                 var map = this.state.map;
@@ -147,7 +138,7 @@ var ReactMapboxFactory = function (_a) {
                 if (!map) {
                     return null;
                 }
-                this.listeners = map_events_1.updateEvents(this.listeners, this.props, map);
+                this.listeners = updateEvents(this.listeners, this.props, map);
                 var center = map.getCenter();
                 var zoom = map.getZoom();
                 var bearing = map.getBearing();
@@ -202,10 +193,10 @@ var ReactMapboxFactory = function (_a) {
                     var container = ready && map && typeof map.getCanvasContainer === 'function'
                         ? map.getCanvasContainer()
                         : undefined;
-                    return (React.createElement(context_1.MapContext.Provider, { value: map },
-                        React.createElement("div", { ref: this.setRef, className: className, style: __assign({}, containerStyle) }, ready && container && react_dom_1.createPortal(children, container))));
+                    return (React.createElement(MapContext.Provider, { value: map },
+                        React.createElement("div", { ref: this.setRef, className: className, style: __assign({}, containerStyle) }, ready && container && createPortal(children, container))));
                 }
-                return (React.createElement(context_1.MapContext.Provider, { value: map },
+                return (React.createElement(MapContext.Provider, { value: map },
                     React.createElement("div", { ref: this.setRef, className: className, style: __assign({}, containerStyle) }, ready && children)));
             };
             return ReactMapboxGl;
@@ -223,5 +214,5 @@ var ReactMapboxFactory = function (_a) {
         },
         _y;
 };
-exports.default = ReactMapboxFactory;
+export default ReactMapboxFactory;
 //# sourceMappingURL=map.js.map
